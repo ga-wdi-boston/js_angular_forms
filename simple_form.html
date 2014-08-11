@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Picking up the angular library from a CDN -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular.min.js"></script>
+</head>
+
+<!-- Mark this as an Angular app -->
+<body ng-app="myapp">
+
+<!-- Everything in this div is part of the MyController angular controller. -->
+<div ng-controller="MyController" >
+
+  <form>
+    <!-- get the first name  -->
+    <input type="text" name="firstName" ng-model="myForm.firstName"> First name <br/>
+    <!-- get the last name  -->
+    <input type="text" name="lastName"  ng-model="myForm.lastName"> Last name <br/>
+
+    <!-- Checkbox if I have agreed to some agreement -->
+    <!--- The two default values are "true" and "false" -->
+    Sign Agreement: <input type="checkbox" ng-model="myForm.signedAgreement" >
+    <br/>
+    <!-- Checkbos to determine if the user wants some news letter -->
+    <!-- We set the two default values to either "yes" or "no" -->
+    Wants News Letter: <input type="checkbox" ng-model="myForm.wantNewsletter"
+                        ng-true-value="yes" ng-false-value="no" >
+  
+   <fieldset>
+    <label>Newsletter Subscription</label>
+    Daily <input type="radio" ng-model="myForm.whichNewsletter" value="dailyNews">    
+    Weekly <input type="radio" ng-model="myForm.whichNewsletter" value="weeklyNews">    
+    Monthly <input type="radio" ng-model="myForm.whichNewsletter" value="monthlyNews">   
+  </fieldset>
+  
+  </form>
+
+  <hr/>
+  <div>
+    Name: {{myForm.firstName}} {{myForm.lastName}}
+    <br/>
+    Agreement: {{myForm.signedAgreement}} 
+    <br/>
+    Wants Newsletter: {{myForm.wantNewsletter}} 
+    <br/>
+    Newsletter Subscription: {{myForm.whichNewsletter}} 
+  </div>
+  </div>
+
+ 
+
+  <script>
+    // Creating a application module named 'mayapp'
+    angular.module("myapp", [])
+    // Creating a controller named "MyControlller"
+            .controller("MyController", function($scope) {
+
+              // set the myForm property on $scope to 
+              // an object literal
+                $scope.myForm = {};
+                // put two properties on the myForm property 
+                // of the $scope
+                $scope.myForm.firstName = "Jakob";
+                $scope.myForm.lastName  = "Jenkov";
+
+                // Init the default for the agreement to NOT signed
+                $scope.myForm.signedAgreement = false;
+
+                // Init the default for the wants newsletter
+                $scope.myForm.wantNewsletter = 'yes';
+
+                // Init the default to use the weekly subscription
+                $scope.myForm.whichNewsletter = 'weekly';
+
+            } );
+</script>
+
+</body>
+</html>
