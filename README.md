@@ -10,6 +10,13 @@
 
 ## Demo
 
+### Setup
+
+Install angular.
+
+```bower install```
+
+
 ##### All code will be included in the index.html.
 _(Not great, but will get us through these simple demo files.)_
 
