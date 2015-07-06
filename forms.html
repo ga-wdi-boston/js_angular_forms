@@ -1,0 +1,142 @@
+<html>
+  <head>
+    <style>
+      /* green */
+      .fieldValid {
+        background: #00ff00;
+      }
+      /* red */
+      .fieldInvalid {
+        background: #ff0000;
+      }
+</style>
+
+  <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+  </head>
+  <body ng-app="myapp">
+    <div ng-controller="MyController as myCtrl">
+      <!-- A very simple form, notice it has NO 
+      action attribute -->
+      <!--- <form action="/customers/create"> -->
+
+      <form name="myFormNg">
+
+        <label for="firstName">First Name</label>
+        <input type="text" name="firstName" ng-minlength="2" ng-maxlength="15" required ng-model="myCtrl.myForm.firstName" 
+        ng-class="myCtrl.getCSS(myFormNg.firstName )"></input>
+        <br/>
+        <div ng-show="myFormNg.firstName.$invalid">
+            You must enter a valid first name.
+        </div>
+      
+        <label for="lastName">Last Name</label>
+        <input type="text" name="lastName" ng-minlength="4" ng-maxlength="10" required ng-model="myCtrl.myForm.lastName"
+        ng-class="myCtrl.getCSS(myFormNg.lastName )"></input>
+        <br/>
+        <div ng-show="myFormNg.lastName.$invalid">
+            You must enter a valid last name.
+        </div>
+      
+        <!-- A number field that will contain an age that is 1,2 or 3 digit long.
+         it's min value is 1 and it's max value is 115 -->
+        <input type="number" name="age"  ng-model="myCtrl.myForm.age" ng-pattern="/^\d{1,3}$/" min=1 max=115>Age</input><br/>
+
+        <br/>
+
+        <!-- checkbox will be checked if the signedAgreement
+        property is true, otherwise it will NOT be checked -->
+        <label for="agreement">Sign Agreement</label>
+        <input type="checkbox" id="agreement" ng-model="myCtrl.myForm.signedAgreement">
+        <br/>
+
+        <label> Wants to receive newsletter: 
+          <input type="checkbox" ng-model="myCtrl.myForm.wantNewsLetter" ng-true-value="'yes'" ng-false-value="'no'"/>
+        </label>
+
+        <fieldset>
+          Daily <input type="radio" ng-model="myCtrl.myForm.whichNewsLetter" value="dailyNews"/>
+          Weekly <input type="radio" ng-model="myCtrl.myForm.whichNewsLetter" value="weeklyNews"/>
+          Monthly <input type="radio" ng-model="myCtrl.myForm.whichNewsLetter" value="monthlyNews" />
+        </fieldset>
+
+        <label for="car-model">Select A Car Model</label>
+        <select id="car-model" ng-model="myCtrl.myForm.car"
+        ng-options="obj.id as obj.name group by obj.type for obj in myCtrl.myForm.options">
+          <option value="default">Select a Car Model</option>
+        </select>
+
+        <hr/>
+        <br/>
+        <input type="submit" ng-click="myCtrl.createSubscription(myFormNg)"></input>
+      </form>
+
+      <!-- Area that will reflect the model being changed by
+      the form above -->
+      <div>
+        {{myCtrl.myForm.firstName}} {{myCtrl.myForm.lastName}}
+        <br/>
+        Form Contents {{myCtrl.myForm | json }}
+      </div>
+    </div>
+
+    <!-- create some inline JS, don't do this normally -->
+    <script>
+      // defining the application module/namespace.
+      angular.module("myapp", [])
+      .controller("MyController", function(){
+        // This is the Constructor function to create
+        // a MyController instance
+        // $scope is injected into the controller Constructor
+        // function.
+
+
+        // object literal that will be used as the model for the form.
+        this.myForm = {};
+        // set the initial contents of the name
+        this.myForm.firstName = "";
+        this.myForm.lastName = "";
+        this.myForm.signedAgreement = false;
+        this.myForm.wantNewsLetter = 'yes';
+        this.myForm.whichNewsLetter = "weeklyNews";
+        this.myForm.car = "default";
+        this.myForm.age=18;
+
+        // Create an array that will be used in the 
+        // template to generate select tag options
+        this.myForm.options = [
+          {id: "default", name: "Select a Model"},
+          {id: "nissan", name: "Nissan Motors", type: "foreign"},
+          {id: "toyota", name: "Toyota, Inc", type: "foreign"},
+          {id: "fiat", name: "Fiat, Italia", type: "foreign"},
+          {id: "ford", name: "Ford Motors", type: "domestic"},
+          {id: "chevy", name: "Chevolet", type: "domestic"},
+        ];
+
+         // set the CSS to green if the input field is valid
+        // otherwise set the CSS to red.
+        this.getCSS = function(inputFieldValue){
+
+          // $pristine - field has never been changed.
+          if(inputFieldValue.$pristine){
+            return "";
+          }
+
+          // $valid - will be true if the field is valid, meets all the 
+          // constraints that have been attached to the field. Like,
+          // minlength, maxlength, pattern, required, ....
+          return inputFieldValue.$valid ? "fieldValid" : "fieldInvalid";
+        };
+
+        this.createSubscription = function(form){
+          if(form && form.$valid){
+            alert("form is valid");
+          }else {
+            alert("form is INVALID");
+          }
+         alert("the current form is " + this.myForm);
+        }
+
+      });
+    </script>
+  </body>
+</html>

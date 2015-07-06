@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+   <style>
+      /* green */
+      .validEducation {
+        background: #00ff00;
+      }
+      /* red */
+      .invalidEducation {
+        background: #ff0000;
+      }
+</style>
+
+  <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+</head>
+<body ng-app="customerApp">
+  <!-- Everything inside of this div is the template -->
+  <div ng-controller="CustomerController as customerCtrl">
+    <form>
+      <label for="name"> Name
+      <!-- Add a minlength and maxlength --> 
+      <input type="text" name='name' ng-minlength="4" maxlength="20" ng-model="customerCtrl.myForm.name">
+
+      <br/>
+      <label for="email"> Email</label>
+      <!-- email field with a regexp validation--> 
+      <input type="email" id="email" ng-pattern="/\S+@\S+\.\S+/" ng-model="customerCtrl.myForm.email" >
+  
+      <br/>
+      <fieldset ng-class="customerCtrl.validEducation()">
+      <!-- Education checkboxes -->
+      <label for="hs"> High School</label>
+      <input type="checkbox" id="hs" ng-model="customerCtrl.myForm.edLevel" ng-true-value="'hs'"/>
+      <br/>
+      <label for="as"> Associates Degree</label>
+      <input type="checkbox" id="as" ng-model="customerCtrl.myForm.edLevel" ng-true-value="'as'"/>  
+      <br/>
+      <label for="bs"> Bachelors Degree</label>
+      <input type="checkbox" id="bs" ng-model="customerCtrl.myForm.edLevel" ng-true-value="'bs'"/>  
+      <br/>
+      <label for="ms"> Masters</label>
+      <input type="checkbox" id="ms" ng-model="customerCtrl.myForm.edLevel" ng-true-value="'ms'"/>  
+      <br/>
+      <label for="dd"> Doctorate </label>
+      <input type="checkbox" id="dd" ng-model="customerCtrl.myForm.edLevel" ng-true-value="'dd'"/>      
+
+      </fieldset>
+      <br/>
+     
+      <fieldset>
+        <legend>Gender</legend>
+        Male: <input type="radio" ng-model="customerCtrl.myForm.gender" value="male"/>
+         Female: <input type="radio" ng-model="customerCtrl.myForm.gender" value="female"/>
+      </fieldset>
+    </form>
+
+    <label for="tranport">Transport</label>
+    <select id="transport" ng-model="customerCtrl.myForm.transport" ng-options="obj.foo as obj.bar for obj in customerCtrl.options">
+    </select>
+
+    <div>
+     View Model is {{ customerCtrl.myForm | json }}
+    </div>
+
+
+    <script type="text/javascript">
+      angular.module('customerApp', [])
+      .controller("CustomerController", function(){
+        this.myForm = {};
+        this.myForm.name = "Tom Dyer";
+        this.myForm.edLevel = "";
+        this.myForm.gender = "";
+        this.myForm.tranport = "bus";
+
+        this.options = [
+          {foo: "bus", bar: "Bus"},
+          {foo: "train", bar: "Train"},          
+          {foo: "auto", bar: "Auto"},          
+          {foo: "bike", bar: "Bike"}          
+        ]
+
+        // set the CSS to green if the input field is valid
+        // otherwise set the CSS to red.
+        this.getCSS = function(inputFieldValue){
+
+          // $pristine - field has never been changed.
+          if(inputFieldValue.$pristine){
+            return "";
+          }
+
+          // $valid - will be true if the field is valid, meets all the 
+          // constraints that have been attached to the field. Like,
+          // minlength, maxlength, pattern, required, ....
+          return inputFieldValue.$valid ? "fieldValid" : "fieldInvalid";
+        };
+
+        this.validEducation = function(){
+          var theClass = "";
+          if(this.myForm.edLevel.length > 0){
+            theClass = 'validEducation';
+          }else{
+            theClass = "invalidEducation";
+          }
+          return theClass;
+        };
+      })
+    </script>
+  </div>
+</body>
+</html>
