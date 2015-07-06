@@ -5,7 +5,7 @@
     $routeProvider
       .when('/',
             {
-              controller: 'customersController',
+              controller: 'customersController as custCtrl',
               templateUrl: 'app/views/customers_done.html'
             }
            )

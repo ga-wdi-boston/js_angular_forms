@@ -1,19 +1,23 @@
 (function customersControllerIIFE(){
 
-  var CustomersController = function($scope, customersFactory, appSettings){
-    $scope.sortBy = "name";
-    $scope.reverse = false;
-    $scope.customers= [];
-    $scope.appSettings = appSettings;
-
-    $scope.master = {};
+  var CustomersController = function(customersFactory, appSettings){
+    var vm = this;
+    vm.appSettings = appSettings;
+    vm.sortBy = "name";
+    vm.reverse = false;
+    // All the customers
+    vm.customers= [];
+    // reflects the contents of the form, the current customer
+    vm.currentCustomer = {};
+    // The customer to be saved/persisted
+    vm.master = {};
 
     function init(){
       // Init the customers from the factory
-      //$scope.customers = customersFactory.getCustomers();
+      // Get all the customers from the backend
       customersFactory.getCustomers()
       .success(function(customers){
-        $scope.customers = customers;
+        vm.customers = customers;
       })
       .error(function(data, status, headers, config){
         console.log("Error getting customers from the remote api");
@@ -23,28 +27,31 @@
 
     init();
 
-    $scope.update = function(customer){
-      $scope.master = angular.copy(customer);
-
-    };
-    $scope.reset = function(){
-      $scope.customer = angular.copy($scope.master);
+    // copy the form contents to the master
+    vm.update = function(){
+      vm.master = angular.copy(vm.currentCustomer);
     };
 
-    $scope.isUnchanged = function(customer) {
-      return angular.equals(customer, $scope.master);
+    // reset the form to empty
+    vm.reset = function(){
+      vm.currentCustomer = angular.copy({});
     };
 
-    $scope.reset();
+    vm.isUnchanged = function(customer) {
+      return angular.equals(vm.currentCustomer, vm.master);
+    };
 
-    $scope.doSort = function(propName){
-      $scope.sortBy = propName;
-      $scope.reverse = !$scope.reverse;
+    // start off with a reset form
+    vm.reset();
+
+    vm.doSort = function(propName){
+      vm.sortBy = propName;
+      vm.reverse = !vm.reverse;
     };
 
   };
 
- CustomersController.$inject = ['$scope', 'customersFactory', 'appSettings'];
+ CustomersController.$inject = ['customersFactory', 'appSettings'];
 
  // The Controller is part of the module.
  angular.module('customersApp').controller('customersController', CustomersController);
