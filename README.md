@@ -17,7 +17,7 @@ Install angular.
 ```bower install```
 
 
-##### All code will be included in the index.html.
+##### All code will be included in the form.html.
 _(Not great, but will get us through these simple demo files.)_
 
 The below is a recap of this article, [Angular JS Forms](http://tutorials.jenkov.com/angularjs/forms.html).
@@ -82,6 +82,10 @@ The done version is in ``simple_input_form.html``
 
 ```
 
+## Lab
+
+Create and index.html and add Customer Name input field. *Pretty like above*
+
 ### Create a couple of checkboxes.
 
 The done version is in ``simple_checkbox_form.html``
@@ -112,6 +116,10 @@ $scope.myForm.wantsNewsLetter = 'yes';
 ...
 ```
 
+## Lab
+
+In index.html add Customer Education Level checkboxes. One for High School, one each for Associates, Bachelor, Master and Doctorate degrees.
+
 ### Create a couple of radio buttons.
 
 Done version is in ``simple_radio_form.html``
@@ -139,6 +147,10 @@ Update the javascript.
 $scope.myForm.whichNewsLetter = 'weeklyNews';
 ```
 
+## Lab
+
+Add to the index.html Customer Gender radio buttons, one for male and one for female.
+
 ### Create a select/drop down.
 
 Here we are going to hardcode the drop down options.
@@ -162,6 +174,12 @@ The done version is in ``simple_select_form_done.html``
  // The default selected car is nissan
  $scope.myForm.car = 'nissan';
 ```
+
+## Lab
+
+Add to the index.html Customer current mode of tranportation, Bus, Train, Auto, Bicycle, Motorcycle using a select field. 
+
+Can only choose one. 
 
 ### Generate the select options dynamically.
 
@@ -191,6 +209,10 @@ The done version is in ``complex_select_form.html``
     ];
   });
 ```
+
+## Lab
+
+Same as above but generate the options.
 
 ### Create option groups.
 
@@ -222,6 +244,11 @@ $scope.myForm.options = [
       });
 ```
 
+## Lab
+
+Same as above but generate options types.
+
+
 ### Add min/max validations.
 
 This will add the ng-minlength and ng-maxlength attributes to the first and last name fields.
@@ -235,6 +262,14 @@ The done version is in ``length_valid_form_done.html``
 
 <input type="text" name="lastName"  ng-model="myForm.lastName" ng-minlength="4" ng-maxlength="10"> Last name <br/>
 ```
+
+## Lab
+
+Add min/max validations to the customer name.
+
+And create a customer city input field.
+
+
 
 ### Use Regular Expressions to validate an age.
 
@@ -250,6 +285,11 @@ The done version is in regexp_valid_form_done.rb.
         <br/>
 ```
 
+## Lab
+
+Add a customer email field and use a regular expression to validated it.
+
+
 ### Validate required fields.
 
 We will require that a first and last name be entered. 
@@ -264,6 +304,11 @@ Done file is ``required_valid_form.html``
 
 <input type="text" name="lastName"  ng-model="myForm.lastName" ng-minlength="4" ng-maxlength="10" ng-required> Last name <br/>
 ```
+
+## Lab
+
+Make customer email and name required.
+
 ### Add background color for valid/invalid fields.
 
 Done file is ``field_state_form_done.html``.
@@ -296,19 +341,6 @@ Done file is ``field_state_form_done.html``.
 <input type="text" name="lastName"  ng-model="myForm.lastName" ng-minlength="4" ng-maxlength="10" ng-required ng-class="myForm.getFormFieldCssClass(myFormNg.lastName)"> Last name <br/>
   
 ```
-
-## Lab 
-Refactor the ``field_state_form`` to seperate the controller, view and css.
-
-## Lab
-#### Back End
-Create a backend Rails API using the rails-api gem. It should return a set of people where each person has a first/last name, age, agreement status, newletter subscription status and car make the person is interested in. 
-
-#### Front End
-Show a list or table of all these people in the angular client side code.
-
-Create new people using the form we worked on above. _(Add client and server side validations)_
-
 
 ## Documentation
 
