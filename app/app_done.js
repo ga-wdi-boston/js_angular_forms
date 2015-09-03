@@ -12,6 +12,7 @@
       .when('/orders/:customerId',
             {
               controller: 'ordersController',
+              controllerAs: 'ordersCtrl',
               templateUrl: 'app/views/orders_done.html'
             }
            )

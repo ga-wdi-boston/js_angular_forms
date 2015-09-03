@@ -16,10 +16,9 @@
       // Init the customers from the factory
       // Get all the customers from the backend
       customersFactory.getCustomers()
-      .success(function(customers){
-        vm.customers = customers;
-      })
-      .error(function(data, status, headers, config){
+      .then(function(result){
+        vm.customers = result.data;
+      }, function(data, status, headers, config){
         console.log("Error getting customers from the remote api");
         alert("Error getting customers from the remote api");
       });
