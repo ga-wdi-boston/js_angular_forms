@@ -42,7 +42,7 @@ Work thru these files in order. (See the *_done.html for finished versions)
 
 With a two text fields.
 
-The done version is in ``simple_input_form.html``
+The done version is in ``simple_input_form_done.html``
 
 ```html
 <!DOCTYPE html>
@@ -53,52 +53,48 @@ The done version is in ``simple_input_form.html``
 
   <body ng-app="myapp">
 
-    <div ng-controller="MyController" >
+    <div ng-controller="MyController as ctrl" >
       <form>
         <!-- Bind the input field to the myForm.firstName -->
-        <input type="text" name="firstName" ng-model="myForm.firstName"> First name <br/>
+        <input type="text" name="firstName" ng-model="ctrl.myForm.firstName"> First name <br/>
         <!-- Bind the input field to the myForm.lastName -->
-        <input type="text" name="lastName"  ng-model="myForm.lastName"> Last name <br/>
+        <input type="text" name="lastName"  ng-model="ctrl.myForm.lastName"> Last name <br/>
       </form>
 
       <div>
         <!-- Just show the models/properties bound to the input field -->
-        {{myForm.firstName}} {{myForm.lastName}}
+        {{ctrl.myForm.firstName}} {{ctrl.myForm.lastName}}
       </div>
     </div>
 
     <script>
       angular.module("myapp", [])
-      .controller("MyController", function($scope) {
-      $scope.myForm = {};
+      .controller("MyController", function() {
+      this.myForm = {};
       // init the name
-      $scope.myForm.firstName = "Jakob";
-      $scope.myForm.lastName  = "Jenkov";
+      this.myForm.firstName = "Jakob";
+      this.myForm.lastName  = "Jenkov";
       } );
     </script>
 
   </body>
 </html>
-
 ```
 
 ## Lab
 
-Create and index.html and add Customer Name input field. *Pretty like above*
+Create an index.html and add Customer Name input field. *Pretty like above*
 
 ### Create a couple of checkboxes.
 
-The done version is in ``simple_checkbox_form.html``
+The done version is in ``simple_checkbox_form_done.html``
 
 ```html
 ...
-Sign Agreement: 
-<input type="checkbox" ng-model="myForm.signedAgreement" >
+  	Sign Aggreement: <input type="checkbox" ng-model="ctrl.myForm.signedAgreement">
+   <br/>
 
- Wants to recieve the newsletter: 
- <input type="checkbox" ng-model="myForm.wantsNewsLetter" ng-true-value="'yes'" ng-false-value="'no'">
-
-...        
+	Wants to receive the newsletter: <input type="checkbox" ng-model="ctrl.myForm.wantNewsletter" ng-true-value="'YES'" ng-false-value="'NO'" >        
 
 <p>Signed Agreement: {{myForm.signedAgreement}}</p>
 <p>Wants Newsletter: {{myForm.wantsNewsLetter}}</p>
@@ -111,8 +107,8 @@ This will set the initial values for the checkboxes.
 
 ```javascript
 ...
-$scope.myForm.signedAgreement = false;
-$scope.myForm.wantsNewsLetter = 'yes';
+this.myForm.signedAgreement = false;
+this.myForm.wantsNewsLetter = 'YES';
 ...
 ```
 
@@ -122,29 +118,28 @@ In index.html add Customer Education Level checkboxes. One for High School, one 
 
 ### Create a couple of radio buttons.
 
-Done version is in ``simple_radio_form.html``
+Done version is in ``simple_radio_form_done.html``
 
 ```html
 ...
 <fieldset>
   <legend>Newsletter</legend>
-  Daily <input type="radio" ng-model="myForm.whichNewsLetter" value="dailyNews"/>
+  Daily <input type="radio" ng-model="ctrl.myForm.whichNewsLetter" value="dailyNews"/>
   <br/>
-  Weekly <input type="radio" ng-model="myForm.whichNewsLetter" value="weeklyNews"/>
+  Weekly <input type="radio" ng-model="ctrl.myForm.whichNewsLetter" value="weeklyNews"/>
   <br/>
-  Monthly <input type="radio" ng-model="myForm.whichNewsLetter" value="monthlyNews"/>
+  Monthly <input type="radio" ng-model="ctrl.myForm.whichNewsLetter" value="monthlyNews"/>
   <br/>
   </fieldset>
 ...  
-  <p>Which Newsletter: {{myForm.whichNewsLetter}}</p>
+  <p>Which Newsletter: {{ctrl.myForm.whichNewsLetter}}</p>
 
 ```
 
 Update the javascript. 
 
 ```javascript
-...
-$scope.myForm.whichNewsLetter = 'weeklyNews';
+	this.myForm.whichNewsLetter = 'weeklyNews';
 ```
 
 ## Lab
@@ -160,19 +155,19 @@ The done version is in ``simple_select_form_done.html``
 ```html
 ...
   <label for="car-model">Select Car Make</label>
-  <select id="car-model" ng-model="myForm.car">
+  <select id="car-model" ng-model="ctrl.myForm.car">
     <option value="nissan">Nissan</option>
     <option value="toyota">Toyota</option>
     <option value="fiat">Fiat</option>
   </select>
 ...
-  <p>Selected Car: {{myForm.car}}</p>
+  <p>Selected Car: {{ctrl.myForm.car}}</p>
 ...
 ```
 
 ```javascript
  // The default selected car is nissan
- $scope.myForm.car = 'nissan';
+ this.myForm.car = 'nissan';
 ```
 
 ## Lab
@@ -187,13 +182,13 @@ Generate the options from an array that contains an object literal for each opti
 
 This object literal will have two properties. An ``id`` for the option id and name ``property`` for the option name.
 
-The done version is in ``complex_select_form.html``
+The done version is in ``complex_select_form_done.html``
 
 ```html
 ...
   <label for="car-model">Select Car Make</label>
-  <select id="car-model" ng-model="myForm.car" 
-  ng-options="obj.id as obj.name for obj in myForm.options">
+  <select id="car-model" ng-model="ctrl.myForm.car" 
+  ng-options="obj.id as obj.name for obj in ctrl.myForm.options">
   </select>
 ...
 ```
@@ -202,7 +197,7 @@ The done version is in ``complex_select_form.html``
 
 ```javascript  
 	...
-  $scope.myForm.options = [
+   this.myForm.options = [
       { id : "nissan", name: "Nissan" },
       { id : "toyota", name: "Toyota" },
       { id : "fiat"  , name: "Fiat" }
@@ -220,12 +215,12 @@ This will group the Car Models by either domestic or foreign manufactorers.
 
 Add a ``group by obj.type`` the expression.
 
-The done version is in ``complex_select2_form.html``
+The done version is in ``complex_select2_form_done.html``
 
 
 ```html
 ...
-  <select id="car-model" ng-model="myForm.car" ng-options="obj.id as obj.name group by obj.type for obj in myForm.options" >
+  <select id="car-model" ng-model="ctrl.myForm.car" ng-options="obj.id as obj.name group by obj.type for obj in ctrl.myForm.options" >
     <option value="">Please choose a car</option>
   </select>
 ...  
@@ -234,7 +229,7 @@ The done version is in ``complex_select2_form.html``
 Create another property for each car model named ``type``.
 
 ```javascript
-$scope.myForm.options = [
+this.myForm.options = [
       { id : "nissan", name: "Nissan", type: 'foreign' },
       { id : "toyota", name: "Toyota", type: 'foreign' },
       { id : "fiat"  , name: "Fiat", type: 'foreign' },
@@ -258,9 +253,9 @@ The model associated with each will NOT be updated unless the field is **valid**
 The done version is in ``length_valid_form_done.html``
 
 ```html
-<input type="text" name="firstName" ng-model="myForm.firstName" ng-minlength="2" ng-maxlength="15"> First name <br/>
+<input type="text" name="firstName" ng-model="ctrl.myForm.firstName" ng-minlength="2" ng-maxlength="15"> First name <br/>
 
-<input type="text" name="lastName"  ng-model="myForm.lastName" ng-minlength="4" ng-maxlength="10"> Last name <br/>
+<input type="text" name="lastName"  ng-model="ctrl.myForm.lastName" ng-minlength="4" ng-maxlength="10"> Last name <br/>
 ```
 
 ## Lab
@@ -281,7 +276,7 @@ The done version is in regexp_valid_form_done.rb.
 
 ```html
 
-<input type="number" name="age"  ng-model="myForm.age" ng-pattern="/^\d{1,3}$/" min=1 max=115>Age<br/>
+<input type="number" name="age"  ng-model="ctrl.myForm.age" ng-pattern="/^\d{1,3}$/" min=1 max=115>Age<br/>
         <br/>
 ```
 
@@ -296,13 +291,13 @@ We will require that a first and last name be entered.
 
 >> Note that we can use the HTML5 ``required`` attribute OR the Angular ``ng-required`` attribute.
 
-Done file is ``required_valid_form.html``
+Done file is ``required_valid_form_done.html``
 
 ```html
 <!-- Angular will check for the HTML5 required attribute, or you can use ng-required -->
-<input type="text" name="firstName" ng-model="myForm.firstName" ng-minlength="2" ng-maxlength="15" required > First name <br/>
+<input type="text" name="firstName" ng-model="ctrl.myForm.firstName" ng-minlength="2" ng-maxlength="15" required > First name <br/>
 
-<input type="text" name="lastName"  ng-model="myForm.lastName" ng-minlength="4" ng-maxlength="10" ng-required> Last name <br/>
+<input type="text" name="lastName"  ng-model="ctrl.myForm.lastName" ng-minlength="4" ng-maxlength="10" ng-required> Last name <br/>
 ```
 
 ## Lab
@@ -336,9 +331,9 @@ Done file is ``field_state_form_done.html``.
 <!-- Notice the method, myForm.getFormFieldCssClass -->
 <form name="myFormNg">
 
- <input type="text" name="firstName" ng-model="myForm.firstName" ng-minlength="2" ng-maxlength="15" required ng-class="myForm.getFormFieldCssClass(myFormNg.firstName)"> First name <br/>
+ <input type="text" name="firstName" ng-model="myForm.firstName" ng-minlength="2" ng-maxlength="15" required ng-class="ctrl.myForm.getFormFieldCssClass(myFormNg.firstName)"> First name <br/>
 
-<input type="text" name="lastName"  ng-model="myForm.lastName" ng-minlength="4" ng-maxlength="10" ng-required ng-class="myForm.getFormFieldCssClass(myFormNg.lastName)"> Last name <br/>
+<input type="text" name="lastName"  ng-model="myForm.lastName" ng-minlength="4" ng-maxlength="10" ng-required ng-class="ctrl.myForm.getFormFieldCssClass(myFormNg.lastName)"> Last name <br/>
   
 ```
 
