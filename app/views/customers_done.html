@@ -3,7 +3,7 @@
 
 <!-- Add a Customer -->
 
-<form novalidate name='form' class="css-form" ng-model="formModel">
+<form novalidate name='form' class="css-form">
   <fieldset>
     <legend>Customer</legend>
 
@@ -17,7 +17,6 @@
 
   <br />
   <button ng-click="custCtrl.reset()" ng-disabled="custCtrl.isUnchanged()" >Reset</button>
-
   <button ng-click="custCtrl.create()" ng-disabled="custCtrl.form.$invalid || custCtrl.isUnchanged()">Create Customer</button>
 
 </form>

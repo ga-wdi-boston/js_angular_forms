@@ -33,6 +33,7 @@
         .then(function(result){
           vm.master = result.data;
           vm.customers.push(vm.master);
+          vm.currentCustomer = {};
         }, function(data, status,headers, config){
           console.log('Error creating a customer');
           alert('Error creating a customer');
