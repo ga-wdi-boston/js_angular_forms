@@ -2,17 +2,22 @@
 
   // Create a customers factory
   var customersFactory = function($http){
-    var factory = {};
+    var customersAPI = {};
 
-    factory.getCustomers = function(){
+    customersAPI.getCustomers = function(){
       // allow access to the list of customers
       return  $http.get('http://localhost:3000/customers');
     };
 
-    factory.getCustomer = function(customerId){
+    customersAPI.getCustomer = function(customerId){
       return  $http.get('http://localhost:3000/customers/' + customerId);
     };
-    return factory;
+
+    customersAPI.createCustomer = function(customer){
+      return  $http.post('http://localhost:3000/customers/', {'customer': customer});
+    };
+
+    return customersAPI;
   };
 
   customersFactory.$inject = ['$http'];

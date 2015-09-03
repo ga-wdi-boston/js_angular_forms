@@ -5,6 +5,7 @@
     vm.appSettings = appSettings;
     vm.sortBy = "name";
     vm.reverse = false;
+
     // All the customers
     vm.customers= [];
     // reflects the contents of the form, the current customer
@@ -26,9 +27,16 @@
 
     init();
 
-    // copy the form contents to the master
-    vm.update = function(){
-      vm.master = angular.copy(vm.currentCustomer);
+    vm.create = function(){
+      // vm.master = angular.copy(vm.currentCustomer);
+      customersFactory.createCustomer(vm.currentCustomer)
+        .then(function(result){
+          vm.master = result.data;
+          vm.customers.push(vm.master);
+        }, function(data, status,headers, config){
+          console.log('Error creating a customer');
+          alert('Error creating a customer');
+        });
     };
 
     // reset the form to empty
