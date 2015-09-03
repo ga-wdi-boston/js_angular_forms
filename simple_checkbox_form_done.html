@@ -1,45 +1,45 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular.min.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
   </head>
 
   <body ng-app="myapp">
 
-    <div ng-controller="MyController" >
+    <div ng-controller="MyController as ctrl" >
       <form>
-        <input type="text" name="firstName" ng-model="myForm.firstName"> First name <br/>
-        <input type="text" name="lastName"  ng-model="myForm.lastName"> Last name <br/>
+        <input type="text" name="firstName" ng-model="ctrl.myForm.firstName"> First name <br/>
+        <input type="text" name="lastName"  ng-model="ctrl.myForm.lastName"> Last name <br/>
 
         <!-- By default the possible values for a checkbox will be either "false" or "true" -->
-        Sign Aggreement: <input type="checkbox" ng-model="myForm.signedAgreement">
+        Sign Aggreement: <input type="checkbox" ng-model="ctrl.myForm.signedAgreement">
         <br/>
 
         <!-- We can change the two possible values for a checkbox -->
-        Wants to receive the newsletter: <input type="checkbox" ng-model="myForm.wantNewsletter" ng-true-value="yes" ng-false-value="no" >
+        Wants to receive the newsletter: <input type="checkbox" ng-model="ctrl.myForm.wantNewsletter" ng-true-value="'YES'" ng-false-value="'NO'" >
       </form>
 
       <div>
         <!-- Just show the models/properties bound to the input field -->
-        <p>Name: {{myForm.firstName}} {{myForm.lastName}}</p>
-        <p>Signed Aggreement: {{myForm.signedAgreement}}
-        <p>Wants Newsletter: {{myForm.wantNewsletter}}
+        <p>Name: {{ctrl.myForm.firstName}} {{ctrl.myForm.lastName}}</p>
+        <p>Signed Aggreement: {{ctrl.myForm.signedAgreement}}
+        <p>Wants Newsletter: {{ctrl.myForm.wantNewsletter}}
 
       </div>
     </div>
 
     <script>
       angular.module("myapp", [])
-      .controller("MyController", function($scope) {
-      $scope.myForm = {};
+      .controller("MyController", function() {
+      this.myForm = {};
       // init the name
-      $scope.myForm.firstName = "Jakob";
-      $scope.myForm.lastName  = "Jenkov";
+      this.myForm.firstName = "Jakob";
+      this.myForm.lastName  = "Jenkov";
 
       // not signed by default
-      $scope.myForm.signedAgreement  = false;
+      this.myForm.signedAgreement  = false;
       // wants news letter is 'yes' by default
-      $scope.myForm.wantNewsletter = 'yes';
+      this.myForm.wantNewsletter = 'YES';
       } );
     </script>
 
