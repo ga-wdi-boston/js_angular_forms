@@ -3,15 +3,23 @@
 
 <!-- Add a Customer -->
 
-<form novalidate name='form' class="css-form">
+<form name="customerForm" class="css-form">
   <fieldset>
     <legend>Customer</legend>
 
-    <input type="text" ng-model="custCtrl.currentCustomer.name" name="cName" minlength="2" maxlength="15" required placeholder="Name" />
+    <input type="text" ng-model="custCtrl.currentCustomer.name" name="custName" minlength="2" maxlength="15" required placeholder="Name" />
+    <div ng-messages="customerForm.custName.$error">
+        <span ng-message="minlength">Your name is too short.</span>
+        <span ng-message="maxlength">Your name is too long.</span>
+        <span ng-message="required">Your name is required.</span>
+    </div>
     <br/>
 
-    <input type="text" ng-model="custCtrl.currentCustomer.city" name='cCity' minlength="2" maxlength="10" placeholder="City"/>
-    <br/>
+    <input type="text" ng-model="custCtrl.currentCustomer.city" name='custCity' minlength="2" maxlength="10" placeholder="City"/>
+    <div ng-messages="customerForm.custCity.$error">
+        <span ng-message="minlength">Your city name is too short.</span>
+        <span ng-message="maxlength">Your city name is too long.</span>
+    </div>
 
   </fieldset>
 

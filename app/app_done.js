@@ -1,5 +1,5 @@
 (function customersAppIIFE(){
-  var app = angular.module('customersApp', ['ngRoute']);
+  var app = angular.module('customersApp', ['ngRoute', 'ngMessages']);
 
   app.config(function($routeProvider){
     $routeProvider
